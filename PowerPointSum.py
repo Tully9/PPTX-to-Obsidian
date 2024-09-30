@@ -3,7 +3,7 @@ from transformers import pipeline
 import os
 import re
 
-# Step 1: Extract text and images from .pptx file
+# Extract text and images from .pptx file
 def extract_text_and_images_from_pptx(pptx_file, output_image_dir):
     prs = Presentation(pptx_file)
     slides_content = []
@@ -47,7 +47,7 @@ def extract_text_and_images_from_pptx(pptx_file, output_image_dir):
 
     return slides_content
 
-# Step 2: Summarize each slide using Hugging Face model
+# Summarize each slide using Hugging Face model
 def summarize_slides(slides_content):
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
     summarized_notes = []
@@ -65,7 +65,7 @@ def summarize_slides(slides_content):
     
     return summarized_notes
 
-# Step 3: Save summarized notes and image links to markdown for Obsidian
+# Save summarized notes and image links to markdown for Obsidian
 def save_as_markdown(summarized_notes, output_file, image_dir):
     with open(output_file, "w") as f:
         for i, slide in enumerate(summarized_notes):
@@ -86,7 +86,7 @@ def process_pptx_to_detailed_notes(pptx_file, output_file, output_image_dir):
     save_as_markdown(summarized_notes, output_file, output_image_dir)
     print(f"Summarized notes with images saved to {output_file}")
 
-# Usage: Update with your .pptx file path, output markdown file, and image directory
+# Update with your .pptx file path, output markdown file, and image directory
 pptx_file = "W1L1-comp-org-intro.pptx"  # Replace with your file path
 output_file = "notes_for_obsidian.md"  # Replace with your desired output file name
 output_image_dir = r"C:\Users\tom\Documents\LLM_Playground\photos"  # Directory to save extracted images
