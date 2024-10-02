@@ -89,6 +89,6 @@ def process_pptx_to_detailed_notes(pptx_file, output_file, output_image_dir):
 # Update with your .pptx file path, output markdown file, and image directory
 pptx_file = "W1L1-comp-org-intro.pptx"  # Replace with your file path
 output_file = "notes_for_obsidian.md"  # Replace with your desired output file name
-output_image_dir = r"C:\Users\tom\Documents\LLM_Playground\photos"  # Directory to save extracted images
+output_image_dir = r"C:\Users\"  # Directory to save extracted images
 
 process_pptx_to_detailed_notes(pptx_file, output_file, output_image_dir)
