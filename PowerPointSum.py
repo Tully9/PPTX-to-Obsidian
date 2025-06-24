@@ -40,25 +40,25 @@ def extract_text_and_images_from_pptx(pptx_file, output_image_dir):
 
     return slides_content
 
-def summarize_slides(slides_content):
-    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
-    summarized_notes = []
+def summarise_slides(slides_content):
+    summariser = pipeline("summarization", model="facebook/bart-large-cnn")
+    summarised_notes = []
     
     for slide in slides_content:
         text = slide["text"].strip()
         if len(text) > 0: 
-            summary = summarizer(text, max_length=250, min_length=80, do_sample=False)[0]['summary_text']
+            summary = summariser(text, max_length=250, min_length=80, do_sample=False)[0]['summary_text']
             summary_bullets = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', summary)
             bullet_summary = "\n".join([f"- {s.strip()}" for s in summary_bullets if s.strip()])
         else:
             bullet_summary = "(No significant text on this slide)"
-        summarized_notes.append({"title": slide["title"], "summary": bullet_summary, "images": slide["images"]})
+        summarised_notes.append({"title": slide["title"], "summary": bullet_summary, "images": slide["images"]})
     
-    return summarized_notes
+    return summarised_notes
 
-def save_as_markdown(summarized_notes, output_file, image_dir):
+def save_as_markdown(summarised_notes, output_file, image_dir):
     with open(output_file, "w") as f:
-        for i, slide in enumerate(summarized_notes):
+        for i, slide in enumerate(summarised_notes):
             f.write(f"# {slide['title']}\n") 
             f.write(f"{slide['summary']}\n\n")
             
@@ -69,9 +69,9 @@ def save_as_markdown(summarized_notes, output_file, image_dir):
 
 def process_pptx_to_detailed_notes(pptx_file, output_file, output_image_dir):
     slides_content = extract_text_and_images_from_pptx(pptx_file, output_image_dir)
-    summarized_notes = summarize_slides(slides_content)
-    save_as_markdown(summarized_notes, output_file, output_image_dir)
-    print(f"Summarized notes with images saved to {output_file}")
+    summarised_notes = summarise_slides(slides_content)
+    save_as_markdown(summarised_notes, output_file, output_image_dir)
+    print(f"summarised notes with images saved to {output_file}")
 
 pptx_file = "W1L1-comp-org-intro.pptx" 
 output_file = "notes_for_obsidian.md"
